@@ -1,0 +1,2821 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050505;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.game-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+.city {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #02030a 0%,
+            #080b18 55%,
+            #151525 100%
+        );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moon {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    background: #eeeecc;
+
+    top: 12%;
+    right: 12%;
+
+    box-shadow: 0 0 40px rgba(238, 238, 204, 0.35);
+}
+
+.title {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.small-text {
+    letter-spacing: 6px;
+    font-size: 13px;
+    margin-bottom: 25px;
+    opacity: 0.7;
+}
+
+h1 {
+    font-size: clamp(55px, 12vw, 130px);
+    letter-spacing: 15px;
+    line-height: 0.9;
+}
+
+h2 {
+    font-size: clamp(25px, 5vw, 55px);
+    letter-spacing: 10px;
+    margin-top: 15px;
+}
+
+.subtitle {
+    margin-top: 35px;
+    letter-spacing: 5px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+#startButton {
+    margin-top: 45px;
+
+    padding: 15px 40px;
+
+    background: transparent;
+    color: white;
+
+    border: 2px solid white;
+
+    font-size: 16px;
+    letter-spacing: 4px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#startButton:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
+.copyright {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+    opacity: 0.4;
+}/* MISSION SCREEN */
+
+.mission-screen {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+
+    max-width: 700px;
+    padding: 30px;
+
+    animation: missionAppear 0.8s ease;
+}
+
+.mission-label {
+    font-size: 12px;
+    letter-spacing: 6px;
+    opacity: 0.6;
+    margin-bottom: 25px;
+}
+
+.mission-screen h1 {
+    font-size: clamp(40px, 8vw, 80px);
+    letter-spacing: 8px;
+}
+
+.mission-line {
+    width: 100px;
+    height: 2px;
+    background: white;
+
+    margin: 30px auto;
+    opacity: 0.5;
+}
+
+.mission-text {
+    font-size: 16px;
+    line-height: 1.8;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+.objective {
+    margin-top: 35px;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 15px;
+}
+
+#beginMission {
+    margin-top: 35px;
+
+    padding: 15px 30px;
+
+    background: transparent;
+    color: white;
+
+    border: 2px solid white;
+
+    font-size: 14px;
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#beginMission:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
+@keyframes missionAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}/* =========================
+   PLAYABLE GOTHAM
+========================= */
+.game-area {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #02030a 0%,
+            #080b18 45%,
+            #101321 100%
+        );
+}
+
+/* Header */
+
+.game-header {
+    position: absolute;
+
+    top: 20px;
+    left: 25px;
+    right: 25px;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    opacity: 0.7;
+
+    z-index: 10;
+}
+
+
+/* Player */
+
+#player {
+    position: absolute;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 28px;
+
+    transform: translate(-50%, -50%);
+
+    text-shadow:
+        0 0 8px white,
+        0 0 20px rgba(255,255,255,0.5);
+
+    z-index: 10;
+}
+
+
+/* Clues */
+
+.clue {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #eeeecc;
+
+    font-size: 24px;
+
+    text-shadow:
+        0 0 10px #eeeecc,
+        0 0 25px #eeeecc;
+
+    animation: cluePulse 1.2s infinite alternate;
+    z-index: 10;
+}
+
+.clue1 {
+    left: 25%;
+    top: 30%;
+}
+
+.clue2 {
+    left: 70%;
+    top: 55%;
+}
+
+.clue3 {
+    left: 40%;
+    top: 75%;
+}
+
+
+@keyframes cluePulse {
+
+    from {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+}
+
+
+/* Instructions */
+
+.instructions {
+    position: absolute;
+
+    bottom: 20px;
+    left: 0;
+    right: 0;
+
+    text-align: center;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    opacity: 0.4;
+}
+
+
+/* Mission Complete */
+
+.complete-screen {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+
+    width: min(700px, 90%);
+
+    z-index: 20;
+}
+
+.complete-screen h1 {
+    font-size: clamp(35px, 7vw, 75px);
+}
+
+.achievement {
+    margin-top: 35px;
+
+    padding: 20px;
+
+    border: 1px solid rgba(255,255,255,0.4);
+
+    letter-spacing: 3px;
+
+    font-size: 13px;
+}
+
+.achievement strong {
+    font-size: 20px;
+}
+/* =========================
+   GOTHAM CITY
+========================= */
+
+.game-area::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 42%;
+
+    background:
+        linear-gradient(
+            to top,
+            #050509 0%,
+            #0b0d16 70%,
+            transparent 100%
+        );
+
+    clip-path: polygon(
+        0% 100%,
+        0% 55%,
+        5% 55%,
+        5% 35%,
+        9% 35%,
+        9% 60%,
+        14% 60%,
+        14% 20%,
+        19% 20%,
+        19% 48%,
+        24% 48%,
+        24% 30%,
+        28% 30%,
+        28% 62%,
+        34% 62%,
+        34% 15%,
+        39% 15%,
+        39% 45%,
+        44% 45%,
+        44% 25%,
+        50% 25%,
+        50% 55%,
+        56% 55%,
+        56% 18%,
+        61% 18%,
+        61% 40%,
+        67% 40%,
+        67% 10%,
+        72% 10%,
+        72% 50%,
+        78% 50%,
+        78% 28%,
+        83% 28%,
+        83% 58%,
+        89% 58%,
+        89% 22%,
+        94% 22%,
+        94% 45%,
+        100% 45%,
+        100% 100%
+    );
+
+    z-index: 1;
+}
+.game-area::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 18%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 80px,
+            rgba(255,255,255,0.035) 81px,
+            transparent 82px
+        ),
+        linear-gradient(
+            to bottom,
+            #11131b,
+            #050509
+        );
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    z-index: 2;
+}/* =========================
+   NIGHTFALL HERO
+========================= */
+
+#player {
+    position: absolute;
+
+    width: 55px;
+    height: 70px;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.25));
+}
+
+
+/* Hero container */
+
+.hero {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Head / mask */
+
+.hero-head {
+    position: absolute;
+
+    width: 28px;
+    height: 28px;
+
+    left: 50%;
+    top: 2px;
+
+    transform: translateX(-50%);
+
+    background: #151722;
+
+    border: 2px solid #8d91a0;
+
+    border-radius: 45% 45% 40% 40%;
+
+    z-index: 3;
+}
+
+
+/* Mask ears */
+
+.hero-head::before,
+.hero-head::after {
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 12px;
+
+    background: #151722;
+
+    top: -8px;
+}
+
+.hero-head::before {
+    left: 1px;
+
+    transform: rotate(-20deg);
+}
+
+.hero-head::after {
+    right: 1px;
+
+    transform: rotate(20deg);
+}
+
+
+/* Eyes */
+
+.hero-eye {
+    position: absolute;
+
+    width: 6px;
+    height: 3px;
+
+    top: 12px;
+
+    background: #eeeecc;
+
+    box-shadow: 0 0 6px #eeeecc;
+}
+
+.left-eye {
+    left: 5px;
+}
+
+.right-eye {
+    right: 5px;
+}
+
+
+/* Body */
+
+.hero-body {
+    position: absolute;
+
+    width: 34px;
+    height: 35px;
+
+    left: 50%;
+    top: 25px;
+
+    transform: translateX(-50%);
+
+    background: #10121c;
+
+    border: 2px solid #747988;
+
+    border-radius: 35% 35% 20% 20%;
+
+    z-index: 2;
+}
+
+
+/* Chest emblem */
+
+.hero-body::after {
+    content: "N";
+
+    position: absolute;
+
+    left: 50%;
+    top: 8px;
+
+    transform: translateX(-50%);
+
+    font-size: 11px;
+    font-weight: bold;
+
+    color: #eeeecc;
+
+    text-shadow: 0 0 6px #eeeecc;
+}
+
+
+/* Cape */
+
+.hero-cape {
+    position: absolute;
+
+    width: 48px;
+    height: 38px;
+
+    left: 50%;
+    top: 27px;
+
+    transform: translateX(-50%);
+
+    background: #070810;
+
+    clip-path: polygon(
+        15% 0%,
+        85% 0%,
+        100% 100%,
+        75% 75%,
+        60% 100%,
+        50% 78%,
+        40% 100%,
+        25% 75%,
+        0% 100%
+    );
+
+    z-index: 1;
+}
+.game-area .hidden-clue {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-area.night-vision .hidden-clue {
+    opacity: 1;
+}
+/* MISSION 01 - CLUE LOCATIONS */
+
+.game-area .clue1 {
+    left: 18%;
+    top: 30%;
+}
+
+.game-area .clue2 {
+    left: 78%;
+    top: 45%;
+}
+
+.game-area .clue3 {
+    left: 50%;
+    top: 68%;
+}
+/* ============================= */
+/* MISSION 01 - SCROLLING WORLD  */
+/* ============================= */
+
+.world {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 3200px;
+    height: 100%;
+
+    z-index: 3;
+
+    background: transparent;
+}
+.world::after {
+    display: none;
+}
+
+
+.game-area::before,
+.game-area::after {
+    display: none;
+}
+.game-header {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    padding: 25px 40px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+
+    align-items: center;
+
+    z-index: 50;
+
+    pointer-events: none;
+}
+
+.game-header span:first-child {
+    justify-self: start;
+}
+
+.game-header span:nth-child(2) {
+    justify-self: center;
+}
+
+.game-header span:last-child {
+    justify-self: end;
+}
+/* ================================= */
+/* GOTHAM CITY SKYLINE               */
+/* ================================= */
+
+/* ========================================= */
+/* CINEMATIC GOTHAM SKYLINE                  */
+/* ========================================= */
+
+.gotham-skyline {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 3200px;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* ========================================= */
+/* DISTANT CITY                              */
+/* ========================================= */
+
+.city-layer {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 3200px;
+    height: 100%;
+}
+
+
+.distant {
+    opacity: 0.35;
+    filter: blur(1px);
+}
+
+
+/* ========================================= */
+/* DISTANT TOWERS                            */
+/* ========================================= */
+
+.tower {
+    position: absolute;
+
+    bottom: 30%;
+
+    background: #101522;
+
+    border-top: 1px solid rgba(160,170,190,0.12);
+}
+
+
+/* irregular distant skyline */
+
+.d1 {
+    left: 120px;
+    width: 150px;
+    height: 35%;
+}
+
+.d2 {
+    left: 390px;
+    width: 100px;
+    height: 52%;
+}
+
+.d3 {
+    left: 560px;
+    width: 190px;
+    height: 42%;
+}
+
+.d4 {
+    left: 900px;
+    width: 120px;
+    height: 62%;
+}
+
+.d5 {
+    left: 1160px;
+    width: 210px;
+    height: 38%;
+}
+
+.d6 {
+    left: 1530px;
+    width: 140px;
+    height: 55%;
+}
+
+.d7 {
+    left: 1800px;
+    width: 230px;
+    height: 45%;
+}
+
+
+/* ========================================= */
+/* MAIN GOTHAM                               */
+/* ========================================= */
+
+.main-city {
+    bottom: 18%;
+}
+
+
+/* base building */
+
+.building {
+    position: absolute;
+
+    bottom: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #111522,
+            #080a10
+        );
+
+    border-top: 1px solid rgba(150,160,180,0.18);
+
+    box-shadow:
+        inset 12px 0 30px rgba(0,0,0,0.25),
+        inset -12px 0 30px rgba(0,0,0,0.2);
+}
+
+
+/* subtle window texture */
+
+.building::after {
+    content: "";
+    position: absolute;
+    inset: 22px 18px;
+
+    background:
+        /* faint vertical window columns */
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 24px,
+            rgba(210,210,190,0.08) 25px,
+            rgba(210,210,190,0.08) 29px,
+            transparent 30px,
+            transparent 48px
+        ),
+
+        /* faint horizontal floors */
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 20px,
+            rgba(210,210,190,0.07) 21px,
+            rgba(210,210,190,0.07) 24px,
+            transparent 25px
+        );
+
+    opacity: 0.8;
+}
+
+/* ========================================= */
+/* MAIN BUILDINGS                            */
+/* ========================================= */
+
+.b1 {
+    left: 40px;
+    width: 190px;
+    height: 48%;
+}
+
+.b2 {
+    left: 280px;
+    width: 130px;
+    height: 72%;
+}
+
+.b2::before {
+    content: "";
+
+    position: absolute;
+
+    top: -55px;
+    left: 35%;
+
+    width: 2px;
+    height: 55px;
+
+    background: #171b27;
+}
+
+
+.b3 {
+    left: 470px;
+    width: 240px;
+    height: 55%;
+}
+
+.b4 {
+    left: 790px;
+    width: 150px;
+    height: 82%;
+}
+
+.b4::before {
+    content: "";
+
+    position: absolute;
+
+    top: -75px;
+    left: 50%;
+
+    width: 2px;
+    height: 75px;
+
+    background: #1a1e2a;
+}
+
+
+.b5 {
+    left: 1020px;
+    width: 280px;
+    height: 46%;
+}
+
+.b6 {
+    left: 1380px;
+    width: 180px;
+    height: 68%;
+}
+
+.b7 {
+    left: 1650px;
+    width: 260px;
+    height: 52%;
+}
+
+.b8 {
+    left: 1990px;
+    width: 150px;
+    height: 76%;
+}
+.b9 {
+    left: 2220px;
+    width: 210px;
+    height: 58%;
+}
+
+.b10 {
+    left: 2500px;
+    width: 140px;
+    height: 76%;
+}
+
+.b10::before {
+    content: "";
+
+    position: absolute;
+
+    top: -65px;
+    left: 50%;
+
+    width: 2px;
+    height: 65px;
+
+    background: #1a1e2a;
+}
+
+.b11 {
+    left: 2700px;
+    width: 230px;
+    height: 48%;
+}
+
+.b12 {
+    left: 2990px;
+    width: 120px;
+    height: 68%;
+}
+
+.b13 {
+    left: 3150px;
+    width: 180px;
+    height: 42%;
+}
+/* ============================= */
+/* DISTINCT GOTHAM BUILDINGS */
+/* ============================= */
+
+/* B2 - Tall Gotham Tower */
+.b2 {
+    clip-path: polygon(
+        0% 8%,
+        28% 8%,
+        28% 3%,
+        42% 3%,
+        50% 0%,
+        58% 3%,
+        72% 3%,
+        72% 8%,
+        100% 8%,
+        100% 100%,
+        0% 100%
+    );
+}
+
+
+/* B4 - Pointed Gothic Tower */
+.b4 {
+    clip-path: polygon(
+        0% 10%,
+        25% 10%,
+        38% 6%,
+        50% 0%,
+        62% 6%,
+        75% 10%,
+        100% 10%,
+        100% 100%,
+        0% 100%
+    );
+}
+
+
+/* B8 - Old Gotham Building */
+.b8 {
+    clip-path: polygon(
+        0% 12%,
+        22% 12%,
+        22% 7%,
+        38% 7%,
+        50% 0%,
+        62% 7%,
+        78% 7%,
+        78% 12%,
+        100% 12%,
+        100% 100%,
+        0% 100%
+    );
+}
+/* ============================= */
+/* ROOFTOP ARCHITECTURE */
+/* ============================= */
+
+.b1 {
+    border-top: 3px solid #171b27;
+}
+
+.b3 {
+    border-top: 3px solid #171b27;
+}
+
+.b5 {
+    border-top: 4px solid #171b27;
+}
+
+.b6 {
+    border-top: 3px solid #171b27;
+}
+
+.b7 {
+    border-top: 3px solid #171b27;
+}
+
+.b8 {
+    border-top: 3px solid #171b27;
+}
+
+.b9 {
+    border-top: 3px solid #171b27;
+}
+
+.b10 {
+    border-top: 4px solid #171b27;
+}
+
+.b11 {
+    border-top: 3px solid #171b27;
+}
+
+.b12 {
+    border-top: 4px solid #171b27;
+}
+
+.b13 {
+    border-top: 3px solid #171b27;
+}
+
+
+
+.gotham-skyline::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 18%;
+
+    width: 3200px;
+    height: 35%;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(5,7,14,0.65),
+            transparent
+        );
+
+    pointer-events: none;
+}
+/* ============================= */
+/* GOTHAM DISTRICT MARKERS */
+/* ============================= */
+
+.district-label {
+    position: absolute;
+    top: 18%;
+    z-index: 4;
+
+    color: rgba(190, 195, 210, 0.35);
+
+    font-size: 12px;
+    letter-spacing: 5px;
+    font-weight: 600;
+
+    text-shadow:
+        0 0 8px rgba(180, 190, 210, 0.15);
+
+    pointer-events: none;
+}
+
+.downtown-label {
+    left: 430px;
+}
+
+.alley-label {
+    left: 1450px;
+}
+
+.industrial-label {
+    left: 2650px;
+}
+/* =====================================
+   MISSION 02: NIGHT DRIVE
+   ===================================== */
+
+.mission-two-area {
+    background:
+        linear-gradient(
+            to bottom,
+            #02040b 0%,
+            #0b1020 55%,
+            #060810 100%
+        );
+}
+
+/* DRIVING SCENE */
+
+.drive-scene {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 70% 25%,
+            rgba(48, 65, 105, 0.2),
+            transparent 55%
+        ),
+        linear-gradient(
+            to bottom,
+            #070b16,
+            #111525 65%,
+            #080a12
+        );
+}
+
+/* GOTHAM SKYLINE */
+
+.drive-skyline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 39%;
+    height: 58%;
+    z-index: 1;
+}
+
+.drive-building {
+    position: absolute;
+    bottom: 0;
+    background:
+        linear-gradient(
+            to bottom,
+            #151b2b,
+            #080b13
+        );
+    border-top: 3px solid #20283b;
+    box-shadow:
+        inset 8px 0 18px rgba(0, 0, 0, 0.3),
+        inset -8px 0 18px rgba(0, 0, 0, 0.2);
+}
+
+.drive-building::after {
+    content: "";
+    position: absolute;
+    inset: 12px 8px;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 17px,
+            rgba(205, 215, 240, 0.09) 18px 20px,
+            transparent 21px 30px
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0 22px,
+            rgba(205, 215, 240, 0.08) 23px 25px,
+            transparent 26px 34px
+        );
+}
+
+.db1 {
+    left: 0;
+    width: 13%;
+    height: 55%;
+}
+
+.db2 {
+    left: 13%;
+    width: 12%;
+    height: 85%;
+    clip-path: polygon(
+        0 12%, 30% 12%, 50% 0,
+        70% 12%, 100% 12%, 100% 100%,
+        0 100%
+    );
+}
+
+.db3 {
+    left: 29%;
+    width: 17%;
+    height: 62%;
+}
+
+.db4 {
+    left: 47%;
+    width: 13%;
+    height: 95%;
+    clip-path: polygon(
+        0 10%, 35% 10%, 50% 0,
+        65% 10%, 100% 10%, 100% 100%,
+        0 100%
+    );
+}
+
+.db5 {
+    left: 64%;
+    width: 16%;
+    height: 68%;
+}
+
+.db6 {
+    left: 83%;
+    width: 17%;
+    height: 78%;
+}
+
+/* ROAD */
+
+.drive-road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 43%;
+    overflow: hidden;
+    z-index: 2;
+    background:
+        linear-gradient(
+            to bottom,
+            #171c2b 0%,
+            #0b0e18 20%,
+            #030409 100%
+        );
+    border-top: 3px solid #34394b;
+    box-shadow:
+        0 -8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.road-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(190, 200, 220, 0.18);
+}
+
+.road-edge-top {
+    top: 12%;
+}
+
+.road-edge-bottom {
+    bottom: 8%;
+}
+
+.road-markings {
+    position: absolute;
+    top: 48%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.road-markings span {
+    width: 7%;
+    height: 5px;
+    flex-shrink: 0;
+    background: #c7c8bd;
+    box-shadow: 0 0 8px rgba(220, 225, 220, 0.2);
+}
+
+/* NIGHTFALL-X ARMORED CAR */
+
+.nightfall-car {
+    position: absolute;
+    left: 16%;
+    bottom: 13%;
+    width: 190px;
+    height: 78px;
+    z-index: 5;
+    filter:
+        drop-shadow(0 0 12px rgba(65, 100, 165, 0.25));
+}
+
+.car-aero {
+    position: absolute;
+    left: 3px;
+    top: 24px;
+    width: 23px;
+    height: 30px;
+    z-index: 2;
+    background: #111624;
+    border: 2px solid #50596c;
+    clip-path: polygon(
+        0 0, 100% 15%, 80% 100%, 15% 100%
+    );
+}
+
+.car-body {
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    width: 100%;
+    height: 49px;
+    z-index: 3;
+    background:
+        linear-gradient(
+            to bottom,
+            #333b4c,
+            #171c29 35%,
+            #080b12 100%
+        );
+    border: 2px solid #626b7d;
+    clip-path: polygon(
+        2% 45%,
+        12% 29%,
+        24% 23%,
+        34% 5%,
+        66% 5%,
+        80% 24%,
+        94% 33%,
+        100% 72%,
+        94% 100%,
+        5% 100%,
+        0 72%
+    );
+}
+
+.car-window {
+    position: absolute;
+    left: 61px;
+    top: 13px;
+    width: 65px;
+    height: 26px;
+    z-index: 4;
+    background:
+        linear-gradient(
+            135deg,
+            #52647b,
+            #111b2d 60%,
+            #080d18
+        );
+    border: 2px solid #727c90;
+    clip-path: polygon(
+        18% 0,
+        82% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.car-roof {
+    position: absolute;
+    left: 68px;
+    top: 7px;
+    width: 49px;
+    height: 8px;
+    z-index: 4;
+    background: #515c70;
+    border-radius: 4px 4px 0 0;
+}
+
+.car-wheel {
+    position: absolute;
+    bottom: 0;
+    width: 35px;
+    height: 35px;
+    z-index: 2;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle,
+            #8790a0 0 15%,
+            #202635 18% 35%,
+            #030407 40% 100%
+        );
+    border: 3px solid #05070c;
+    box-shadow: 0 0 0 1px #454d5b;
+}
+
+.wheel-left {
+    left: 27px;
+}
+
+.wheel-right {
+    right: 24px;
+}
+
+.car-light {
+    position: absolute;
+    right: 0;
+    top: 39px;
+    width: 11px;
+    height: 10px;
+    z-index: 5;
+    background: #e3f4ff;
+    box-shadow:
+        0 0 8px #d1eaff,
+        0 0 20px rgba(115, 180, 255, 0.8);
+    border-radius: 2px;
+}
+
+.car-light-left {
+    right: 13px;
+}
+
+.car-light-right {
+    right: 1px;
+}
+
+/* MISSION START MESSAGE */
+
+.drive-start-message {
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: rgba(206, 220, 245, 0.65);
+    text-shadow: 0 0 12px rgba(90, 130, 210, 0.3);
+    pointer-events: none;
+}
+/* MISSION 02 BUTTON */
+
+#nextMissionButton {
+    display: block;
+    box-sizing: border-box;
+    width: min(440px, calc(100% - 32px));
+    margin: 18px auto 0;
+    padding: 15px 20px;
+
+    background: linear-gradient(
+        180deg,
+        #171d2d,
+        #080b14
+    );
+
+    color: #edf1fa;
+    border: 1px solid #59657d;
+    border-radius: 4px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    line-height: 1.6;
+
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#nextMissionButton:hover {
+    background: #202a40;
+    border-color: #aebbd5;
+    box-shadow: 0 0 18px rgba(120, 155, 220, 0.2);
+    transform: translateY(-2px);
+}
+
+#nextMissionButton:active {
+    transform: translateY(0);
+}
+
+/* MISSION 02: ROAD OBSTACLES */
+
+.drive-obstacles {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.road-obstacle {
+    position: absolute;
+    width: 48px;
+    height: 34px;
+    background: linear-gradient(
+        180deg,
+        #f0b84a,
+        #8f4c18
+    );
+    border: 2px solid #ffd477;
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(255, 170, 40, 0.35);
+}
+
+.road-obstacle::before {
+    content: "";
+    position: absolute;
+    inset: 5px 0;
+    background: repeating-linear-gradient(
+        135deg,
+        #20232b 0 8px,
+        #f7d16a 8px 16px
+    );
+}
+/* FIX MISSION 02 HEADER LAYOUT */
+
+.mission-two-area .game-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
+    align-items: center;
+    column-gap: clamp(12px, 2vw, 32px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mission-two-area .game-header span {
+    white-space: nowrap;
+    min-width: 0;
+}
+
+/* MISSION 02: SECRET SIGNAL FRAGMENT */
+
+.signal-fragment {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    box-sizing: border-box;
+    background: #38e8ff;
+    border: 2px solid #d4fbff;
+    transform: rotate(45deg);
+    box-shadow:
+        0 0 8px #38e8ff,
+        0 0 20px rgba(56, 232, 255, 0.8);
+    z-index: 8;
+    pointer-events: none;
+}
+
+.signal-fragment::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+}
+
+/* MISSION 02: SIGNAL COUNTER */
+
+.signal-status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 12;
+    padding: 8px 12px;
+    color: #38e8ff;
+    background: rgba(4, 12, 24, 0.88);
+    border: 1px solid rgba(56, 232, 255, 0.6);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+/* MISSION 02: NITRO BOOST INDICATOR */
+
+.nitro-status {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 12;
+    padding: 8px 12px;
+    color: #38e8ff;
+    background: rgba(4, 12, 24, 0.9);
+    border: 1px solid rgba(56, 232, 255, 0.65);
+    box-shadow: 0 0 10px rgba(56, 232, 255, 0.2);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+/* MISSION 02: CINEMATIC FINALE */
+
+.drive-scene .complete-screen.mission-two-finale {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: clamp(18px, 4vw, 40px);
+    overflow: hidden;
+    text-align: center;
+    color: #eef6ff;
+    background:
+        radial-gradient(
+            ellipse at 50% 75%,
+            rgba(25, 91, 135, 0.48),
+            transparent 65%
+        ),
+        linear-gradient(
+            180deg,
+            #050912,
+            #101d2b 65%,
+            #03060c
+        );
+    animation: finaleFadeIn 1.3s ease both;
+}
+
+.drive-scene .complete-screen.mission-two-finale::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(80, 190, 255, 0.15) 4px,
+        transparent 5px
+    );
+}
+
+.drive-scene .complete-screen.mission-two-finale > * {
+    position: relative;
+    z-index: 1;
+}
+
+.drive-scene .complete-screen.mission-two-finale .mission-label {
+    color: #58dfff;
+    letter-spacing: 4px;
+    animation: finaleRise 0.7s 0.2s both;
+}
+
+.drive-scene .complete-screen.mission-two-finale h1 {
+    color: #f4f8ff;
+    text-shadow: 0 0 22px rgba(56, 200, 255, 0.38);
+    animation: finaleRise 0.8s 0.5s both;
+}
+
+.drive-scene .complete-screen.mission-two-finale .mission-line {
+    animation: finaleLine 0.8s 0.75s both;
+}
+
+.drive-scene .complete-screen.mission-two-finale .mission-text {
+    animation: finaleRise 0.8s 0.9s both;
+}
+
+.drive-scene .complete-screen.mission-two-finale .achievement {
+    animation: finaleRise 0.8s 1.3s both;
+}
+
+@keyframes finaleFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes finaleRise {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes finaleLine {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+/* FIX: FULL-SCREEN MISSION 02 FINALE */
+
+.drive-scene .complete-screen.mission-two-finale {
+    position: absolute;
+    inset: 0;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    min-height: 0;
+
+    margin: 0;
+    transform: none;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+}
+
+/* MISSION 02: INCOMING TRANSMISSION */
+
+.transmission-label {
+    color: #58dfff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(56, 232, 255, 0.8);
+    animation: transmissionPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes transmissionPulse {
+    0%, 100% {
+        opacity: 0.65;
+        text-shadow: 0 0 6px rgba(56, 232, 255, 0.4);
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 16px rgba(56, 232, 255, 1);
+    }
+}
+
+/* MISSION 02: SECRET TRANSMISSION REVEAL */
+
+.transmission-message {
+    margin: 18px 0;
+    color: #58dfff;
+    font-weight: bold;
+    font-size: clamp(14px, 1.5vw, 20px);
+    letter-spacing: 2px;
+    line-height: 1.7;
+    text-align: center;
+    text-shadow: 0 0 14px rgba(56, 232, 255, 0.65);
+
+    opacity: 0;
+    animation: finaleRise 0.9s 2.2s ease both;
+}
+/* MISSION 03: TRANSITION BUTTON */
+
+.drive-scene .complete-screen.mission-two-finale #nextMissionThreeButton {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 100;
+
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto 0;
+    padding: 14px 22px;
+
+    color: #58dfff;
+    background: rgba(8, 24, 40, 0.95);
+    border: 1px solid #58dfff;
+    box-shadow: 0 0 14px rgba(56, 232, 255, 0.2);
+
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.drive-scene .complete-screen.mission-two-finale #nextMissionThreeButton:hover {
+    background: rgba(56, 232, 255, 0.15);
+    box-shadow: 0 0 22px rgba(56, 232, 255, 0.5);
+}
+
+
+/* =========================================================
+   MISSION 03: THE HIDDEN SIGNAL
+   Consolidated Batcomputer + investigation styling
+   ========================================================= */
+
+.mission-three-area {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 15% 25%,
+            rgba(0, 177, 255, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(44, 74, 190, 0.16),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #02060c,
+            #091827 52%,
+            #030710
+        );
+}
+
+.mission-three-area::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            rgba(60, 194, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(60, 194, 255, 0.035) 1px,
+            transparent 1px
+        );
+    background-size: 34px 34px;
+    mask-image: linear-gradient(to bottom, black, transparent 95%);
+}
+
+.mission-three-area .game-header {
+    position: relative;
+    z-index: 2;
+    background: rgba(2, 7, 15, 0.92);
+    border-bottom: 1px solid rgba(56, 216, 255, 0.35);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Mission 03 briefing screen only */
+.mission-three-area .complete-screen {
+    position: absolute;
+    z-index: 1;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, 88%);
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: clamp(24px, 4vw, 48px);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #e6f5ff;
+    text-align: center;
+    background: linear-gradient(
+        145deg,
+        rgba(10, 28, 44, 0.96),
+        rgba(3, 10, 20, 0.96)
+    );
+    border: 1px solid rgba(56, 216, 255, 0.42);
+    box-shadow:
+        0 0 35px rgba(0, 151, 255, 0.12),
+        inset 0 0 35px rgba(0, 151, 255, 0.045);
+    animation: batcomputerEnter 0.85s ease-out both;
+}
+
+.mission-three-area .complete-screen .mission-label {
+    color: #58dfff;
+    letter-spacing: 3px;
+    text-shadow: 0 0 12px rgba(56, 216, 255, 0.45);
+}
+
+.mission-three-area .complete-screen h1 {
+    max-width: 100%;
+    color: #f0f8ff;
+    font-size: clamp(26px, 4vw, 48px);
+    line-height: 1.15;
+    letter-spacing: clamp(2px, 0.6vw, 6px);
+    text-shadow: 0 0 22px rgba(56, 216, 255, 0.28);
+}
+
+.mission-three-area .complete-screen .mission-line {
+    width: min(180px, 45%);
+    background: #58dfff;
+    box-shadow: 0 0 12px rgba(56, 216, 255, 0.65);
+}
+
+.mission-three-area .complete-screen .mission-text {
+    max-width: 650px;
+    line-height: 1.75;
+    color: #bdccdc;
+}
+
+.mission-three-area .complete-screen .achievement {
+    border: 1px solid rgba(56, 216, 255, 0.3);
+    background: rgba(10, 38, 58, 0.45);
+    box-shadow: inset 0 0 18px rgba(56, 216, 255, 0.035);
+}
+
+.mission-three-area #enterFacilityButton {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    padding: 15px 26px;
+    color: #06111b;
+    background: #58dfff;
+    border: 1px solid #b5f3ff;
+    font-family: inherit;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(56, 216, 255, 0.2);
+    transition:
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.mission-three-area #enterFacilityButton:hover {
+    background: #b5f3ff;
+    box-shadow: 0 0 28px rgba(56, 216, 255, 0.55);
+    transform: translateY(-2px);
+}
+
+@keyframes batcomputerEnter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -46%);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+        filter: blur(0);
+    }
+}
+
+/* Investigation screen has its own layout, not .complete-screen */
+.mission-three-area .investigation-panel {
+    position: absolute;
+    z-index: 1;
+    top: 94px;
+    right: 20px;
+    bottom: 12px;
+    left: 20px;
+
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 22px 28px 18px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    transform: none;
+
+    color: #e6f5ff;
+    text-align: center;
+    background: linear-gradient(
+        145deg,
+        rgba(10, 28, 44, 0.98),
+        rgba(3, 10, 20, 0.98)
+    );
+    border: 1px solid rgba(56, 216, 255, 0.35);
+    box-shadow:
+        0 0 30px rgba(0, 151, 255, 0.08),
+        inset 0 0 28px rgba(0, 151, 255, 0.025);
+}
+
+.mission-three-area .investigation-panel > .mission-label {
+    flex: 0 0 auto;
+    margin: 3px 0 8px;
+    color: #58dfff;
+    font-size: 12px;
+    letter-spacing: 3px;
+    line-height: 1.35;
+}
+
+.mission-three-area .investigation-panel h1 {
+    flex: 0 0 auto;
+    max-width: 100%;
+    margin: 6px 0 10px;
+    color: #f0f8ff;
+    font-size: clamp(30px, 3.2vw, 44px);
+    line-height: 1.15;
+    letter-spacing: clamp(1px, 0.25vw, 3px);
+    text-shadow: 0 0 18px rgba(56, 216, 255, 0.25);
+}
+
+.mission-three-area .investigation-panel .mission-line {
+    flex: 0 0 auto;
+    width: min(180px, 45%);
+    height: 2px;
+    margin: 5px 0 12px;
+    background: #58dfff;
+    box-shadow: 0 0 12px rgba(56, 216, 255, 0.5);
+}
+
+.mission-three-area .investigation-panel .mission-text {
+    flex: 0 0 auto;
+    max-width: 900px;
+    margin: 7px auto 10px;
+    color: #bdccdc;
+    font-size: 15px;
+    line-height: 1.55;
+    letter-spacing: 1px;
+}
+
+/* Evidence grid: these display/grid declarations were missing */
+.mission-three-area .investigation-panel .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    flex: 0 0 auto;
+    width: min(1050px, 96%);
+    gap: 18px;
+    margin: 14px auto 8px;
+}
+
+.mission-three-area .investigation-panel button.evidence-card {
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 174px;
+    margin: 0;
+    padding: 18px;
+    box-sizing: border-box;
+    gap: 10px;
+
+    color: #d8ecf8;
+    background: linear-gradient(
+        145deg,
+        rgba(12, 38, 57, 0.96),
+        rgba(4, 13, 25, 0.98)
+    );
+    border: 1px solid rgba(56, 216, 255, 0.35);
+    border-radius: 0;
+    box-shadow: none;
+
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+    white-space: normal;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.mission-three-area .investigation-panel button.evidence-card:hover {
+    transform: translateY(-3px);
+    border-color: #58dfff;
+    background: rgba(12, 45, 66, 0.98);
+    box-shadow: 0 0 22px rgba(56, 216, 255, 0.16);
+}
+
+.mission-three-area .investigation-panel .evidence-icon {
+    color: #58dfff;
+    font-size: 27px;
+    line-height: 1.1;
+    text-shadow: 0 0 14px rgba(56, 216, 255, 0.55);
+}
+
+.mission-three-area .investigation-panel .evidence-card strong {
+    color: #f0f8ff;
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.8px;
+}
+
+.mission-three-area .investigation-panel .evidence-card span:not(.evidence-icon) {
+    color: #9fb8c9;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.mission-three-area .investigation-panel .evidence-card small {
+    margin-top: auto;
+    color: #58dfff;
+    font-size: 10px;
+    line-height: 1.3;
+    letter-spacing: 0.8px;
+}
+
+.mission-three-area .investigation-panel .evidence-card.examined {
+    border-color: #53d7a4;
+    background: rgba(7, 40, 36, 0.9);
+}
+
+.mission-three-area .investigation-panel .evidence-card.examined small {
+    color: #53d7a4;
+}
+
+.mission-three-area .investigation-panel .evidence-card:focus-visible,
+.mission-three-area .investigation-panel #openDecryptButton:focus-visible {
+    outline: 2px solid #e6fbff;
+    outline-offset: 3px;
+}
+
+.mission-three-area .investigation-panel .evidence-message {
+    flex: 0 0 auto;
+    max-width: 900px;
+    min-height: 24px;
+    margin: 8px auto 4px;
+    color: #58dfff;
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: 1.1px;
+    text-align: center;
+}
+
+/* Ensure the hidden attribute wins over button styling */
+.mission-three-area .investigation-panel #openDecryptButton[hidden] {
+    display: none !important;
+}
+
+.mission-three-area .investigation-panel #openDecryptButton:not([hidden]) {
+    appearance: none;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+
+    margin: 8px auto 2px;
+    padding: 12px 22px;
+
+    color: #58dfff;
+    background: rgba(8, 24, 40, 0.98);
+    border: 1px solid #58dfff;
+    border-radius: 0;
+    box-shadow: 0 0 14px rgba(56, 232, 255, 0.2);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.4;
+    letter-spacing: 1.5px;
+    text-align: center;
+    white-space: normal;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.mission-three-area .investigation-panel #openDecryptButton:not([hidden]):hover {
+    background: rgba(56, 232, 255, 0.12);
+    box-shadow: 0 0 22px rgba(56, 232, 255, 0.45);
+    transform: translateY(-2px);
+}
+
+.mission-three-area .investigation-panel > .mission-label:last-child {
+    margin: 6px 0 0;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Fit the same composition on shorter desktop windows, without an inner scrollbar */
+@media (max-height: 780px) {
+    .mission-three-area .investigation-panel {
+        top: 86px;
+        bottom: 8px;
+        padding: 12px 20px;
+    }
+
+    .mission-three-area .investigation-panel > .mission-label {
+        margin: 2px 0 5px;
+        font-size: 10px;
+    }
+
+    .mission-three-area .investigation-panel h1 {
+        margin: 4px 0 7px;
+        font-size: clamp(25px, 2.8vw, 34px);
+    }
+
+    .mission-three-area .investigation-panel .mission-line {
+        margin: 3px 0 8px;
+    }
+
+    .mission-three-area .investigation-panel .mission-text {
+        margin: 4px auto 6px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .mission-three-area .investigation-panel .evidence-grid {
+        gap: 12px;
+        margin: 8px auto 4px;
+    }
+
+    .mission-three-area .investigation-panel button.evidence-card {
+        min-height: 142px;
+        padding: 12px;
+        gap: 7px;
+    }
+
+    .mission-three-area .investigation-panel .evidence-icon {
+        font-size: 23px;
+    }
+
+    .mission-three-area .investigation-panel .evidence-message {
+        min-height: 18px;
+        margin: 4px auto 2px;
+        font-size: 10px;
+    }
+
+    .mission-three-area .investigation-panel #openDecryptButton:not([hidden]) {
+        margin-top: 4px;
+        padding: 9px 18px;
+    }
+}
+
+@media (max-width: 760px) {
+    .mission-three-area .investigation-panel {
+        left: 10px;
+        right: 10px;
+        padding: 16px 12px;
+    }
+
+    .mission-three-area .investigation-panel .evidence-grid {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .mission-three-area .investigation-panel button.evidence-card {
+        padding: 10px;
+        min-height: 160px;
+    }
+
+    .mission-three-area .investigation-panel .evidence-card strong {
+        font-size: 10px;
+    }
+
+    .mission-three-area .investigation-panel .evidence-card span:not(.evidence-icon) {
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================
+   EXTRA MISSIONS 04 & 05
+   ========================================= */
+.extra-mission {
+    overflow-y: auto;
+    padding: 82px 18px 28px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(26, 79, 105, .28), transparent 58%),
+        linear-gradient(145deg, #030710, #0b1422 55%, #03060c);
+}
+.extra-topline {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    right: 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #8ba6b8;
+    font: 11px monospace;
+    letter-spacing: 2px;
+}
+.extra-panel {
+    width: min(850px, 100%);
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 42px);
+    border: 1px solid rgba(77, 204, 226, .35);
+    background: rgba(3, 10, 19, .88);
+    box-shadow: 0 0 45px rgba(20, 174, 205, .08);
+    text-align: center;
+}
+.extra-panel h1 {
+    color: #e5faff;
+    font-size: clamp(32px, 7vw, 66px);
+    letter-spacing: clamp(2px, .7vw, 8px);
+    line-height: 1.08;
+}
+.extra-panel .mission-text {
+    max-width: 680px;
+    margin: 0 auto 26px;
+    color: #b4c7d3;
+}
+.extra-clue-grid, .final-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 26px 0;
+}
+.extra-clue, .final-choice {
+    min-height: 145px;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #31566a;
+    background: #081725;
+    color: #d9f7ff;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.extra-clue b, .final-choice b {
+    color: #55e8f5;
+    font: 12px monospace;
+    letter-spacing: 2px;
+}
+.extra-clue span, .final-choice span {
+    color: #b9cbd5;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.extra-clue small {
+    color: #7f9eae;
+    font: 10px monospace;
+    letter-spacing: 1px;
+}
+.extra-clue.recovered {
+    border-color: #58f3c7;
+    background: #06221e;
+}
+.extra-clue.recovered small { color: #58f3c7; }
+.extra-status {
+    margin: 18px 0;
+    color: #70ddec;
+    font: 12px monospace;
+    letter-spacing: 2px;
+}
+.extra-code-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 16px auto;
+}
+.extra-code-row input {
+    width: 170px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #426a7d;
+    background: #020912;
+    color: white;
+    font: 16px monospace;
+    letter-spacing: 4px;
+    text-align: center;
+}
+.extra-code-row button, .extra-primary {
+    padding: 14px 20px;
+    border: 1px solid #38d9ed;
+    background: #092631;
+    color: #9af6ff;
+    font: 12px monospace;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.extra-feedback { min-height: 22px; color: #ff9c9c; font: 12px monospace; }
+.extra-achievement {
+    margin: 26px auto;
+    padding: 20px;
+    border: 1px solid rgba(88, 243, 199, .45);
+    color: #75f0cb;
+    font: 12px monospace;
+    letter-spacing: 2px;
+    line-height: 1.8;
+}
+.extra-achievement strong { font-size: 19px; }
+.extra-thanks { margin: 22px 0; color: #77e8f2; letter-spacing: 2px; }
+.extra-game-title { margin: 22px 0; color: #e4f7ff; letter-spacing: 3px; }
+
+@media (max-width: 650px) {
+    .extra-mission { padding: 76px 12px 20px; }
+    .extra-topline { left: 12px; right: 12px; font-size: 9px; letter-spacing: 1px; }
+    .extra-panel { padding: 20px 14px; }
+    .extra-panel .mission-label { font-size: 10px; letter-spacing: 3px; }
+    .extra-panel .mission-text { font-size: 14px; letter-spacing: 1px; }
+    .extra-clue-grid, .final-choice-grid { grid-template-columns: 1fr; gap: 9px; }
+    .extra-clue, .final-choice { min-height: 0; padding: 15px; }
+    .extra-code-row { flex-direction: column; align-items: stretch; }
+    .extra-code-row input { width: 100%; min-height: 48px; }
+    .extra-code-row button, .extra-primary { min-height: 48px; width: 100%; }
+}
+
+
+/* =========================================
+   MOBILE & TOUCH CONTROLS
+   ========================================= */
+.mobile-controls {
+    display: none;
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    padding: 0 16px;
+    z-index: 35;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px), (pointer: coarse) {
+    .mobile-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+}
+
+.touch-dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.touch-row {
+    display: flex;
+    gap: 6px;
+}
+
+.touch-steer-group,
+.touch-action-group {
+    display: flex;
+    gap: 8px;
+}
+
+.touch-btn {
+    pointer-events: auto;
+    min-width: 46px;
+    min-height: 46px;
+    padding: 10px 14px;
+    background: rgba(6, 20, 32, 0.88);
+    color: #8af4ff;
+    border: 1px solid rgba(56, 216, 255, 0.5);
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 14px rgba(0, 190, 240, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.touch-btn:active {
+    background: rgba(18, 56, 82, 0.95);
+    border-color: #58f3c7;
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(88, 243, 199, 0.45);
+    transform: scale(0.96);
+}
+
+.touch-btn.touch-nitro {
+    border-color: rgba(255, 180, 50, 0.6);
+    color: #ffd277;
+}
+
+.touch-btn.touch-nitro:active {
+    border-color: #ffe066;
+    background: rgba(90, 60, 10, 0.95);
+}
+
+.touch-btn.touch-nv {
+    border-color: rgba(88, 243, 199, 0.55);
+    color: #79f5cd;
+}
+
+/* Modals & Small screen responsiveness */
+@media (max-width: 650px) {
+    #decryptTerminal {
+        padding: 12px !important;
+    }
+    #decryptTerminal .bc-frame {
+        padding: 16px 12px !important;
+        min-height: 0 !important;
+    }
+    #signalPuzzle > div,
+    #operatorPuzzle > div,
+    #corruptedPuzzle > div {
+        padding: 16px 12px !important;
+    }
+    .game-header {
+        left: 10px !important;
+        right: 10px !important;
+        font-size: 10px !important;
+        letter-spacing: 1px !important;
+    }
+    .instructions {
+        display: none !important;
+    }
+}
+
+
+/* =========================================
+   MISSION 04: STEALTH SUBWAY ARENA
+   ========================================= */
+.mission-four-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #02050b;
+}
+
+.subway-arena {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 50%, #071928, #02050b 82%);
+}
+
+.subway-rails {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 48px,
+            rgba(255, 255, 255, 0.04) 49px,
+            transparent 50px
+        );
+}
+
+.rail-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #254d63;
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.25);
+}
+
+.rail-line.r1 { top: 32%; }
+.rail-line.r2 { top: 52%; }
+.rail-line.r3 { top: 72%; }
+
+.subway-master-console {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(340px, 86%);
+    padding: 12px 16px;
+    background: rgba(4, 14, 22, 0.92);
+    border: 2px solid #ff4e5e;
+    border-radius: 6px;
+    text-align: center;
+    color: #d9f7ff;
+    box-shadow: 0 0 20px rgba(255, 78, 94, 0.3);
+    transition: 0.3s;
+    z-index: 10;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+.subway-master-console strong {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.subway-master-console small {
+    display: block;
+    font-size: 10px;
+    color: #ff919c;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.subway-master-console.unlocked {
+    border-color: #58f3c7;
+    box-shadow: 0 0 28px rgba(88, 243, 199, 0.6);
+    animation: consolePulse 1.2s infinite alternate;
+}
+
+.subway-master-console.unlocked small {
+    color: #58f3c7;
+}
+
+@keyframes consolePulse {
+    from { transform: translateX(-50%) scale(1); }
+    to { transform: translateX(-50%) scale(1.04); }
+}
+
+.subway-terminal {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    transform: translate(-50%, -50%);
+    border: 1px solid #298299;
+    background: rgba(5, 23, 34, 0.9);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #9cf5ff;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.25);
+    z-index: 10;
+    transition: 0.3s;
+    font-family: monospace;
+}
+
+.subway-terminal .term-num {
+    display: block;
+    font-size: 10px;
+    color: #4fe5f5;
+    letter-spacing: 1px;
+}
+
+.subway-terminal b {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin: 2px 0;
+}
+
+.subway-terminal small {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4fe5f5;
+}
+
+.subway-terminal.recovered {
+    border-color: #58f3c7;
+    background: rgba(3, 38, 30, 0.95);
+    color: #8effdc;
+    box-shadow: 0 0 28px rgba(88, 243, 199, 0.7);
+}
+
+.subway-terminal.recovered .term-num,
+.subway-terminal.recovered small {
+    color: #58f3c7;
+}
+
+.security-laser {
+    position: absolute;
+    z-index: 12;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.security-laser.laser-vert {
+    width: 4px;
+    background: #ff2544;
+    box-shadow: 0 0 16px #ff2544, 0 0 30px #ff2544;
+    border-radius: 2px;
+}
+
+.security-laser.laser-horiz {
+    height: 4px;
+    background: #ff2544;
+    box-shadow: 0 0 16px #ff2544, 0 0 30px #ff2544;
+    border-radius: 2px;
+}
+
+.batman-stealth {
+    position: absolute;
+    width: 44px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    pointer-events: none;
+}
+
+.stealth-vision-cone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 230, 255, 0.2) 0%, transparent 72%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.subway-banner {
+    position: absolute;
+    top: 135px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 22px;
+    background: rgba(3, 12, 20, 0.94);
+    border: 1px solid #4fe4f4;
+    border-radius: 5px;
+    font: 12px monospace;
+    letter-spacing: 2px;
+    color: #58f3c7;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 25;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 0 20px rgba(0, 220, 255, 0.25);
+}
+
+.subway-banner.visible {
+    opacity: 1;
+}
